@@ -1,7 +1,7 @@
 # javaEeAccessControlCheck
 Check broken access control exists in the Java web application.
 
-检查 Java Web 应用程序中是否存在访问控制绕过问题。
+检查 Java Web 应用程序中是否存在访问控制绕过/授权绕过问题。
 
 # 使用
 ```
