@@ -27,14 +27,14 @@ python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index" -data-json '{
 ## [POST-JSON]所有Payload长度/All Response Length
 ![image](https://user-images.githubusercontent.com/40931609/145940402-073befea-188e-4fb1-a2f0-6f055255c48d.png)
 
-# 测试某开源系统
+# 测试某开源系统1
 ![image](https://user-images.githubusercontent.com/40931609/145940824-51b28b53-fa70-44a5-a891-4565222bef30.png)
 
 可根据不同payload的返回包长度来判断哪些payload可用
 ![image](https://user-images.githubusercontent.com/40931609/145945707-cd44e164-7c70-40ed-9e35-e70a5a21b376.png)
 
 
-# 测试某开源系统
+# 测试某开源系统2
 ![image](https://user-images.githubusercontent.com/40931609/145946705-c8eb8d84-7d25-4dd6-ab31-1e36370e7a65.png)
 
 
