@@ -13,23 +13,21 @@ Check broken access control exists in the Java web application.
 python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index?id=1"
 python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index" -data id=1
 python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index" -data-json '{"id":1}'
-python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index?id=1" -all
-python3 javaEeAccessControlCheck.py "http://127.0.0.1/admin/index" -data-json '{"id":1}' -all
 ```
 
 ## [GET]自动判断/Automatic judgment
 ![image](https://user-images.githubusercontent.com/40931609/145939989-3e012d69-3884-41ff-9545-970df4564207.png)
 
-## [GET]所有Payload长度/All Response Length
+## ~~[GET]所有Payload长度/All Response Length~~
 ![image](https://user-images.githubusercontent.com/40931609/145940126-278a3c2c-017a-4b2c-935b-763e26ffa03d.png)
 
 ## [POST]自动判断/Automatic judgment
 ![image](https://user-images.githubusercontent.com/40931609/145940164-8b2d828c-106e-43c9-9655-a4be9c617ed6.png)
 
-## [POST]所有Payload长度/All Response Length
+## ~~[POST]所有Payload长度/All Response Length~~
 ![image](https://user-images.githubusercontent.com/40931609/145940303-91b930b9-ca60-4b14-9ea0-fc67f6fe967e.png)
 
-## [POST-JSON]所有Payload长度/All Response Length
+## ~~[POST-JSON]所有Payload长度/All Response Length~~
 ![image](https://user-images.githubusercontent.com/40931609/145940402-073befea-188e-4fb1-a2f0-6f055255c48d.png)
 
 # 测试某开源系统
