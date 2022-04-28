@@ -1,7 +1,7 @@
 # javaEeAccessControlCheck
 Check broken access control exists in the Java web application.
 
-检查 Java Web 应用程序中是否存在访问控制绕过问题。
+检查 Java Web 应用程序中是否存在 访问控制绕过、授权绕过、越权访问、未授权访问等问题。
 
 # 更新
 - 删除requests库及相关方法
